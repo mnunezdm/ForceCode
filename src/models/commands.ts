@@ -65,7 +65,7 @@ export default [
         icon: 'terminal',
         label: 'Execute Anonymous',
         command: function (context, selectedResource?) {
-            return commands.executeAnonymous(vscode.window.activeTextEditor.document, context);
+            return commands.executeAnonymous();
         }
     },
     // Get Log(s)

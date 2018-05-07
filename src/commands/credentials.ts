@@ -3,7 +3,6 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { getIcon } from './../parsers';
 import { configuration } from './../services';
-import DXService from '../services/dxService';
 
 const quickPickOptions: vscode.QuickPickOptions = {
     ignoreFocusOut: true

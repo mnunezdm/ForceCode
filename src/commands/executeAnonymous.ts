@@ -2,8 +2,11 @@ import * as vscode from 'vscode';
 import * as logging from './../providers/LogProvider';
 import { ExecuteAnonymousResult } from '../services/dxService';
 
-export default function executeAnonymous(document: vscode.TextDocument, context: vscode.ExtensionContext): any {
+export default function executeAnonymous(): any {
     const editor = vscode.window.activeTextEditor;
+    if(!editor) {
+        return;
+    }
     var selection = editor.selection;
     var text = editor.document.getText(selection);
     if(text === '')
@@ -17,7 +20,7 @@ export default function executeAnonymous(document: vscode.TextDocument, context:
         return vscode.window.forceCode.dxCommands.execAnon(path).then(res => {
             vscode.window.forceCode.dxCommands.removeFile('execAnon.tmp');
             return res;
-        }).then(res => runDiagnostics(res, document, selection))
+        }).then(res => runDiagnostics(res, editor.document, selection))
         .then(showResult)
         .catch(err => vscode.window.showErrorMessage(err.message));;
     });

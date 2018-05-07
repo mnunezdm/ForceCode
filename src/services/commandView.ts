@@ -89,7 +89,7 @@ export class Task extends TreeItem {
   }
 
   public run() {
-    return this.execution.command(this.context, this.selectedResource).then(res => {
+    return Promise.resolve(this.execution.command(this.context, this.selectedResource)).then(res => {
         this.taskViewProvider.removeTask(this);
         return res;
     });

@@ -21,8 +21,8 @@ export default async function codeCompletionRefresh(): Promise<any> {
     };
     var objectsToGet: SObjectCategory;
     await vscode.window.showQuickPick(options, config).then((res: vscode.QuickPickItem) => {
-        if(res === undefined) {
-            return Promise.reject('No choice selected');
+        if(!res || !res.label) {
+            return;
         }
         if(res.label === 'All') {
             objectsToGet = SObjectCategory.ALL;
@@ -36,6 +36,9 @@ export default async function codeCompletionRefresh(): Promise<any> {
         vscode.window.forceCode.outputChannel.show();
         var gen = new ccr.FauxClassGenerator();
         try {
+            if(!objectsToGet) {
+                return;
+            }
             var startTime = (new Date()).getTime();
             await gen.generate(vscode.workspace.rootPath, objectsToGet);
             var endTime = (new Date()).getTime();
